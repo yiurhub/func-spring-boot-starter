@@ -9,7 +9,6 @@ import org.func.spring.boot.properties.FuncProperties;
 import org.func.spring.boot.type.FuncLambdaType;
 import org.func.spring.boot.type.FuncLogType;
 import org.func.spring.boot.type.FuncStringConstantPool;
-import org.spring.boot.func.annotation.*;
 import org.func.spring.boot.utils.FuncString;
 import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.annotation.MergedAnnotations;

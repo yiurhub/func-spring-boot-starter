@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>func.spring.boot</groupId>
+    <groupId>com.github.yiurhub</groupId>
     <artifactId>func-spring-boot-starter</artifactId>
     <version>1.1.1</version>
 
@@ -68,10 +68,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -140,9 +136,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:https://gitee.com/yiur/func-spring-boot-starter</connection>
-        <developerConnection>scm:git:git@gitee.com:yiur/func-spring-boot-starter.git</developerConnection>
-        <url>https://gitee.com/yiur/func-spring-boot-starter</url>
+        <connection>scm:git:https://github.com/yiurhub/func-spring-boot-starter</connection>
+        <developerConnection>scm:git:git@github.com:yiurhub/func-spring-boot-starter.git</developerConnection>
+        <url>https://github.com/yiurhub/func-spring-boot-starter</url>
         <tag>HEAD</tag>
     </scm>
 

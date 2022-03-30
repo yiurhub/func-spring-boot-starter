@@ -20,49 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="506248ae-725d-45b3-bcfb-8e56b0be696b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/func-spring-boot-starter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/func-spring-boot-starter.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/FuncAutoConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/FuncAutoConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/annotation/CallbackClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/annotation/FuncCallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/annotation/EnableLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/annotation/FuncLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/annotation/FuncConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/annotation/FuncConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/annotation/FuncLambda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/annotation/FuncLambda.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/container/FuncMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/container/FuncMethod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/properties/FuncProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/properties/FuncProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/FuncProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/FuncProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/FuncProxyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/FuncProxyFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/FuncRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/FuncRegistry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/handel/FuncBeanHandel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/handel/FuncHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/init/FuncInitBeanProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/init/FuncInitBeanProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/init/FuncInitRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/proxy/init/FuncInitRegistry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/tool/life/FuncLife.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/tool/life/FuncLife.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/tool/life/FuncLifeStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/tool/life/FuncLifeStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/tool/logger/FuncLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/tool/logger/FuncLogger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/type/FuncStringType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/type/FuncStringType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/utils/FuncString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/spring/boot/func/utils/FuncString.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/spring-configuration-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/spring-configuration-metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/FuncAutoConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/FuncAutoConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/annotation/CallbackClass.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/annotation/EnableLog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/annotation/FuncConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/annotation/FuncConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/container/FuncMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/container/FuncMethod.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/properties/FuncProperties$Logger.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/properties/FuncProperties$Logger.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/properties/FuncProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/properties/FuncProperties.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/FuncProxy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/FuncProxy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/FuncProxyFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/FuncProxyFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/FuncRegistry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/FuncRegistry.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/handel/FuncBeanHandel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/init/FuncInitBeanProxy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/init/FuncInitBeanProxy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/init/FuncInitRegistry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/proxy/init/FuncInitRegistry.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/tool/logger/FuncLogger.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/tool/logger/FuncLogger.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/type/FuncStringType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/type/FuncStringType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/spring/boot/func/utils/FuncString.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/spring/boot/func/utils/FuncString.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/func-spring-boot-starter-1.0.4.RELEASE.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/func-spring-boot-starter-1.0.4.RELEASE.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/func/spring/boot/container/FuncMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/func/spring/boot/container/FuncMethod.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +66,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
@@ -122,6 +82,11 @@
       <recent name="E:\software\IdeaProjects\git\func-spring-boot-starter\src\main\java\org\spring\boot\func\lambda" />
       <recent name="C:\Users\Yiur\IdeaProjects\spring-boot-func-starter" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean deploy -Dmaven.test.skip=true " />
+    </option>
   </component>
   <component name="SpringBootOptions">
     <option name="showAdditionalConfigNotification" value="false" />
@@ -266,6 +231,10 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
+    <state x="334" y="67" key="#Project_Structure" timestamp="1648631145116">
+      <screen x="0" y="24" width="1707" height="936" />
+    </state>
+    <state x="334" y="67" key="#Project_Structure/0.24.1707.936@0.24.1707.936" timestamp="1648631145116" />
     <state x="638" y="171" key="#com.intellij.ide.util.MemberChooser" timestamp="1648396917401">
       <screen x="0" y="24" width="1707" height="936" />
     </state>
@@ -293,26 +262,26 @@
     </state>
     <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1642176381641" />
     <state x="610" y="227" key="FileChooserDialogImpl/0.24.1707.936@0.24.1707.936" timestamp="1647928093003" />
-    <state width="1663" height="227" key="GridCell.Tab.0.bottom" timestamp="1648543302153">
+    <state width="1663" height="227" key="GridCell.Tab.0.bottom" timestamp="1648635185556">
       <screen x="0" y="24" width="1707" height="936" />
     </state>
     <state width="1492" height="158" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1645877199512" />
-    <state width="1663" height="227" key="GridCell.Tab.0.bottom/0.24.1707.936@0.24.1707.936" timestamp="1648543302153" />
-    <state width="1663" height="227" key="GridCell.Tab.0.center" timestamp="1648543302153">
+    <state width="1663" height="227" key="GridCell.Tab.0.bottom/0.24.1707.936@0.24.1707.936" timestamp="1648635185556" />
+    <state width="1663" height="227" key="GridCell.Tab.0.center" timestamp="1648635185556">
       <screen x="0" y="24" width="1707" height="936" />
     </state>
     <state width="1492" height="158" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1645877199512" />
-    <state width="1663" height="227" key="GridCell.Tab.0.center/0.24.1707.936@0.24.1707.936" timestamp="1648543302153" />
-    <state width="1663" height="227" key="GridCell.Tab.0.left" timestamp="1648543302153">
+    <state width="1663" height="227" key="GridCell.Tab.0.center/0.24.1707.936@0.24.1707.936" timestamp="1648635185556" />
+    <state width="1663" height="227" key="GridCell.Tab.0.left" timestamp="1648635185556">
       <screen x="0" y="24" width="1707" height="936" />
     </state>
     <state width="1492" height="158" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1645877199512" />
-    <state width="1663" height="227" key="GridCell.Tab.0.left/0.24.1707.936@0.24.1707.936" timestamp="1648543302153" />
-    <state width="1663" height="227" key="GridCell.Tab.0.right" timestamp="1648543302153">
+    <state width="1663" height="227" key="GridCell.Tab.0.left/0.24.1707.936@0.24.1707.936" timestamp="1648635185556" />
+    <state width="1663" height="227" key="GridCell.Tab.0.right" timestamp="1648635185556">
       <screen x="0" y="24" width="1707" height="936" />
     </state>
     <state width="1492" height="158" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1645877199512" />
-    <state width="1663" height="227" key="GridCell.Tab.0.right/0.24.1707.936@0.24.1707.936" timestamp="1648543302153" />
+    <state width="1663" height="227" key="GridCell.Tab.0.right/0.24.1707.936@0.24.1707.936" timestamp="1648635185556" />
     <state x="299" y="87" key="Maven.ArtifactSearchDialog" timestamp="1642164286654">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -341,10 +310,11 @@
     </state>
     <state x="586" y="187" key="refactoring.ChangeSignatureDialog/0.0.1536.864@0.0.1536.864" timestamp="1642177244802" />
     <state x="651" y="227" key="refactoring.ChangeSignatureDialog/0.24.1707.936@0.24.1707.936" timestamp="1648038480897" />
-    <state x="425" y="197" key="run.anything.popup" timestamp="1642178912878">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state x="472" y="237" width="672" height="677" key="run.anything.popup" timestamp="1648632128803">
+      <screen x="0" y="24" width="1707" height="936" />
     </state>
     <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1642178912878" />
+    <state x="472" y="237" width="672" height="677" key="run.anything.popup/0.24.1707.936@0.24.1707.936" timestamp="1648632128803" />
     <state x="510" y="146" width="672" height="676" key="search.everywhere.popup" timestamp="1648532332836">
       <screen x="0" y="24" width="1707" height="936" />
     </state>
