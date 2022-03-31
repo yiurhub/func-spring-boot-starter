@@ -1,0 +1,84 @@
+{
+  "groups": [
+    {
+      "name": "func-link",
+      "type": "org.func.spring.boot.properties.FuncProperties",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties"
+    },
+    {
+      "name": "func-link.logger",
+      "type": "org.func.spring.boot.properties.FuncProperties$Logger",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties",
+      "sourceMethod": "getLogger()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "func-link.call-back",
+      "type": "java.lang.Class<? extends org.func.spring.boot.component.callback.FuncCallback>",
+      "description": "Bind the callback function class",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties"
+    },
+    {
+      "name": "func-link.is-singleton",
+      "type": "java.lang.Boolean",
+      "description": "Enable singleton mode",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "func-link.lambda",
+      "type": "java.lang.Boolean",
+      "description": "Enable lambda expressions",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "func-link.logger.date-format",
+      "type": "java.lang.String",
+      "description": "date formatting",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties$Logger",
+      "defaultValue": "yyyy-MM-dd HH:mm:ss:SSS"
+    },
+    {
+      "name": "func-link.logger.enable-log",
+      "type": "java.lang.Boolean",
+      "description": "enable log",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties$Logger",
+      "defaultValue": false
+    },
+    {
+      "name": "func-link.logger.file-name",
+      "type": "java.lang.String",
+      "description": "global log prefix",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties$Logger",
+      "defaultValue": "func-link"
+    },
+    {
+      "name": "func-link.logger.file-suffix",
+      "type": "java.lang.String",
+      "description": "global log suffix",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties$Logger",
+      "defaultValue": "log"
+    },
+    {
+      "name": "func-link.logger.message",
+      "type": "java.lang.String",
+      "description": "output log information",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties$Logger",
+      "defaultValue": "[${invokeResult}] [${dateTime}] call method --> ${methodName}(${parameterSource})\r\n"
+    },
+    {
+      "name": "func-link.logger.path",
+      "type": "java.lang.String",
+      "description": "log output path",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties$Logger"
+    },
+    {
+      "name": "func-link.singleton",
+      "type": "java.lang.Boolean",
+      "sourceType": "org.func.spring.boot.properties.FuncProperties"
+    }
+  ],
+  "hints": []
+}

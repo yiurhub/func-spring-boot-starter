@@ -1,110 +1,487 @@
-# func-spring-boot-starter
+# func-spring-boot-starter 匿名函数托管
 
-#### func-spring-boot-starter 介绍
+> GitHub项目路径:
 
-项目地址: https://gitee.com/yiur/func-web-simple
-
-> 核心注解
-
-```java
-@EnableFuncLambda	//开启匿名函数代理
-@FuncConfiguration	//匿名函数配置
-@FuncLambda			//匿名函数
-@EnableLog			//开启匿名函数调用前函数信息
-@CallbackClass		//绑定回调函数类
+```http
+https://github.com/yiurhub/func-spring-boot-starter
 ```
 
-> @EnableFuncLambda
+> Gitee项目路径:
 
-```java
-@EnableWebMvc
-@EnableFuncLambda("com.simple.web.lambda")
-@SpringBootApplication
-public class FuncApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(FuncApplication.class, args);
-    }
-
-}
+```http
+https://gitee.com/yiur/func-spring-boot-starter
 ```
 
-> @FuncConfiguration
+## 使用注意事项
 
-```java
-@FuncConfiguration
-public class LambdaConfig {
-	//code...
-}
+> 推荐版本:
+
+1. **spring-boot-starter `2.6.x`**
+
+##  设计原理
+
+![image-20220331141812337](./images/image-20220331141812337.png)
+
+## 匿名函数特性
+
+###  匿名函数链接配置
+
+### Yaml
+
+```yaml
+func-link:
+    # 默认代理模式
+    singleton: true
+    # 默认开启lambda模式
+    lambda: true
+    # 默认的callback回调函数类
+    call-back: org.func.spring.boot.component.callback.SimpleFuncCallback
+    # logger 配置
+    logger:
+      # 默认false 不输出日志
+      enable-log: false
+      # 默认输出日志信息 ${取当前匿名函数的公开信息}
+      message: "call method --> ${methodName}(${parameterSource})"
+      # 日志执行日志格式化
+      date-format: "yyyy-MM-dd HH:mm:ss"
+      # 输出日志的文件名
+      file-name: "simple"
 ```
 
-> @FuncLambda
+###  JavaConfig
 
-```java
-@FuncLambda(classFile = OutMessage.class, refs = { "blog-log" })
-public String out(@FuncParameter("message") String message, @FuncParameter("args") String... args) {
-	return FuncString.format(message, args);
-}
+添加类注解`@EnableFuncLambda`
+
+需要注入`FuncLinkFactory`工厂类，生产默认`FuncLink`链接类
+
+添加链接的方法为`setObject(key, Object)` **链式编程** **泛型约束** **Lambda**
+
+​	key: {Spring Bean Name}:${功能链接 | 插件}
+
+​	object: ${功能链接类| 插件类}
+
+FuncLink推荐Lambda操作
+
+详细内容请看项目: 
+
+```http
+x 1https://gitee.com/yiur/func-spring-boot-starter/func-web-simple
 ```
-
-> @EnableLog
-
-```java
-@EnableLog
-@FuncLambda(classFile = OutMessage.class, refs = { "blog-log" })
-public String out(@FuncParameter("message") String message) {
-	return FuncString.format(message);
-}
-```
-
-> @CallbackClass
-
-```java
-@EnableLog
-@CallbackClass(DefaultCallback.class)
-@FuncLambda(classFile = OutMessage.class, refs = { "blog-log" })
-public Map<String, String> link() {
-    Map<String, String> map = new HashMap<>(10);
-    map.put("百度", "http://www.baidu.com");
-    map.put("BiliBili", "http://www.bilibili.com");
-    map.put("localhost", "http://localhost:7000");
-    map.put("博客", "https://www.cnblogs.com/yiur-bgy/p/15521428.html");
-    return map;
-}
-```
-
-> FuncLink 配置匿名函数链接
 
 ```java
 @Configuration
+@EnableFuncLambda("com.simple.web.lambda")
 public class FuncLinkConfig {
 
     @Autowired
-    public FuncFactory funcFactory;
+    public FuncLinkFactory funcLinkFactory;
 
     @Bean
     public FuncLink funcLink() {
-        FuncLink build = funcFactory.build()
-                .<FuncLogger>setObject("link-log:log", set -> "link-log => ?{methodName}");
-        setBlogInitOutInfo(build);
-        return build;
+        return funcLinkFactory.build()
+                .<FuncLogger>setObject("logger:log", (set, log) -> "logger => ${methodName}\r\n");
     }
 
-    private void setBlogInitOutInfo(FuncLink funcLink) {
-        funcLink // OutMessage State of life
-                .<FuncLifeStart>setObject(funcToolKey.splice("outMessage", FuncToolType.LIFE_START_KEY), data -> {
-                    if (data.size() > 1) {
-                        data.put("message", FuncString.format("start() -> { ? }", data.get("message")));
+}
+```
+
+###  严格类型托管
+
+开发推荐**严格类型托管**，有代码提示，开发效率更高，在Web项目中，可以托管整个**Servcie**层
+
+配合Mybaits，Redis等框架一起使用
+
+**1、定义接口**
+
+用于SpringBoot自动注入funcLink代理的HttpLink类
+
+```java
+public interface HttpLink {
+
+    Object link();
+
+}
+```
+
+**2、代理类代理接口方法**
+
+`@FuncBean(link = "funcLink Bean Name")`
+
+添加类注解`@FuncBean`声明这是一个匿名函数代理类
+
+添加方法注解`@FuncLambda`声明这是一个代理方法
+
+如果有参数请加上参数注解`@FuncParameter("参数名")`
+
+```java
+@Component
+@FuncBean
+public class FuncLinkHosting implements HttpLink {
+
+    @Override
+    @FuncLambda(classFile = HttpLink.class)
+    public Map<String, String> link() {
+        Map<String, String> map = new HashMap<>(10);
+        map.put("GitHub", "https://github.com/yiurhub");
+        map.put("Gitee", "https://gitee.com/yiur");
+        map.put("博客", "https://www.cnblogs.com/yiur-bgy");
+        return map;
+    }
+
+}
+```
+
+###  松散类型托管
+
+开发使用**不推荐**，后续2.x估计废用，可读性不高
+
+**1、定义接口**
+
+添加类注解`@Component`，用于SpringBoot自动注入funcLink代理的HttpLink类，SpringBoot插件提升
+
+```java
+@Component
+public interface HttpLink {
+
+    Object link();
+
+}
+```
+
+**2、代理类代理接口方法**
+
+@FuncBean(link = "funcLink Bean Name")
+
+松散类型托管需要注意的事项:
+
+1. 代理方法返回值与接口不一样，接口返回值必须得是Object
+
+添加类注解`@FuncBean`声明这是一个匿名函数代理类
+
+添加方法注解`@FuncLambda`声明这是一个代理方法
+
+如果有参数请加上参数注解`@FuncParameter("参数名")`
+
+```java
+@FuncBean
+public class FuncLinkHosting {
+
+    @FuncLambda(classFile = HttpLink.class)
+    public Map<String, String> link() {
+        Map<String, String> map = new HashMap<>(10);
+        map.put("GitHub", "https://github.com/yiurhub");
+        map.put("Gitee", "https://gitee.com/yiur");
+        map.put("博客", "https://www.cnblogs.com/yiur-bgy");
+        return map;
+    }
+
+}
+```
+
+### @FuncLogger
+
+添加方法注解`@FuncLogger`开启方法执行完后的输出日志，**优先级比配置文件高**
+
+`@FuncLogger`参数
+	name: 生成的日志文件名，默认为func-link
+
+​	suffix: 生成的日志文件后缀名，默认为log
+
+​	path: 生成的日志文件存放绝对路径路径，默认当前项目下的log文件夹下
+
+```java
+@FuncBean
+public class FuncLinkHosting implements HttpLink {
+
+    @Override
+    @FuncLogger
+    @FuncLambda(classFile = HttpLink.class)
+    public Map<String, String> link() {
+        Map<String, String> map = new HashMap<>(10);
+        map.put("GitHub", "https://github.com/yiurhub");
+        map.put("Gitee", "https://gitee.com/yiur");
+        map.put("博客", "https://www.cnblogs.com/yiur-bgy");
+        return map;
+    }
+
+}
+```
+
+#### FuncLink 返回message
+
+#### 应用
+
+Logger 日志功能链接，根据执行方法绑定的Bean或者ref，执行此功能
+
+在绑定的方法中执行完后，则会输出日志，获取执行的方法信息
+
+#### 链接
+
+`FuncLogger`
+
+​	功能链接为: **"${Bean Name}:log"**
+
+#### 代码
+
+```java
+@Configuration
+@EnableFuncLambda("com.simple.web.lambda")
+public class FuncLinkConfig {
+
+    @Autowired
+    public FuncLinkFactory funcLinkFactory;
+
+    @Bean
+    public FuncLink funcLink() {
+        return funcLinkFactory.build()
+                .<FuncLogger>setObject("httpLink:log", (set, log) -> "logger => ${methodName}\r\n");
+    }
+
+}
+```
+
+
+
+###  @FuncCallback 注解实现
+
+添加方法注解`@FuncCallback`绑定方法执行后的回调函数
+
+成功执行回调: `then(T result)`
+
+失败执行回调: `error(Throwable e)`
+
+```java
+public class DefaultCallback implements FuncCallback {
+
+    @Override
+    public Object then(Object data) { return data; }
+
+    @Override
+    public Object error(Throwable error) {
+        return error.getMessage();
+    }
+
+}
+```
+
+```java
+@FuncBean
+public class FuncLinkHosting implements HttpLink {
+
+    @Override
+    @FuncCallback(DefaultCallback.class)
+    @FuncLambda(classFile = HttpLink.class)
+    public Map<String, String> link() {
+        Map<String, String> map = new HashMap<>(10);
+        map.put("GitHub", "https://github.com/yiurhub");
+        map.put("Gitee", "https://gitee.com/yiur");
+        map.put("博客", "https://www.cnblogs.com/yiur-bgy");
+        return map;
+    }
+
+}
+```
+
+### FuncLink Callback 实现
+
+#### 应用
+
+Callback 方法执行完回调功能链接，根据执行方法绑定的Bean或者ref，执行此功能
+
+在Web项目Service层中返回方法执行的结果，能做到服务熔断操作
+
+#### 链接
+
+`FuncCallback<T, R>`约束参数值和返回值，**执行优先级: 1**
+
+​	功能链接为: **"${Bean Name}:callback"**
+
+`FuncCallbackThen<T, R>`约束参数值和返回值，**执行优先级: 2**
+
+​	功能链接为: **"${Bean Name}:callback-then"**
+
+`FuncCallbackError<R>`约束返回值，**执行优先级: 2**
+
+​	功能链接为: **"${Bean Name}:callback-error"**
+
+#### 代码
+
+```java
+@Configuration
+@EnableFuncLambda("com.simple.web.lambda")
+public class FuncLinkConfig {
+
+    @Autowired
+    public FuncLinkFactory funcLinkFactory;
+
+    @Bean("simple")
+    public FuncLink funcLink() {
+        return funcLinkFactory.build()
+                // httpLink
+                .<FuncCallback<Map<String, String>, Object>>setObject("httpLink:callback", new FuncCallback<Map<String, String>, Object>() {
+                    @Override
+                    public Object then(Map<String, String> result) {
+                        return result;
                     }
-                    return data;
+
+                    @Override
+                    public Object error(Throwable throwable) {
+                        return throwable;
+                    }
                 })
+                .<FuncCallbackThen<Map<String, String>, Object>>setObject("httpLink:callback-then", result -> result)
+                .<FuncCallbackError<Object>>setObject("httpLink:callback-error", throwable -> throwable);
+    }
 
-                .<FuncCallbackThen<String, String>>setObject("outMessage:callback-then", data -> FuncString.format("[ { \"key\": \"replace\", \"value\": \"?\" } ]", data))
+}
+```
 
-                .<FuncCallbackError<String>>setObject("outMessage:callback-error", error -> error instanceof InvocationTargetException ? ((InvocationTargetException) error).getTargetException().getMessage() : error.getMessage())
+### FuncLink Life 实现
 
-                .<FuncLifeEnd<String, String>>setObject("outMessage:life-end", data -> data);
+#### 应用
+
+Life 方法执行前后回调功能链接，根据执行方法绑定的Bean或者ref，执行此功能
+
+方法执行前会先执行start方法，用来检查参数
+
+方法执行后会执行end方法，用来检查返回值
+
+#### 链接
+
+`FuncLife<T, R>`约束参数值和返回值，**执行优先级: 1**
+
+​	功能链接为: **"${Bean Name}:life"**
+
+`FuncLifeStart`约束参数值和返回值，**执行优先级: 2**
+
+​	功能链接为: **"${Bean Name}:life-start"**
+
+`FuncLifeEnd<T, R>`约束返回值，**执行优先级: 2**
+
+​	功能链接为: **"${Bean Name}:life-end"**
+
+#### 代码
+
+```java
+@Configuration
+@EnableFuncLambda("com.simple.web.lambda")
+public class FuncLinkConfig {
+
+    @Autowired
+    public FuncLinkFactory funcLinkFactory;
+
+    @Bean("simple")
+    public FuncLink funcLink() {
+        return funcLinkFactory.build()
+                // httpLink
+                .<FuncLife<Object, Object>>setObject("httpLink:life", new FuncLife<Object, Object>() {
+                    @Override
+                    public Map<String, Object> start(Map<String, Object> args) {
+                        return args;
+                    }
+
+                    @Override
+                    public Object end(Object result) {
+                        return result;
+                    }
+                })
+                .<FuncLifeStart>setObject("httpLink:life-start", args -> args)
+                .<FuncLifeEnd<Object, Object>>setObject("httpLink:life-end", result -> result);
+    }
+
+}
+```
+
+## 1.1.3.RELEASE 更新
+
+func-spring-boot-starter-1.1.2.RELEASE 依赖
+
+```xml
+<!--func-->
+<dependency>
+    <groupId>io.github.yiurhub</groupId>
+    <artifactId>func-spring-boot-starter</artifactId>
+    <version>1.1.3.RELEASE</version>
+</dependency>
+```
+
+### 添加匿名函数链接自定义实现功能
+
+> AbstractFuncLifePlugin
+
+```java
+public class SimpleLifePlugin extends AbstractFuncLifePlugin {
+
+    public SimpleLifePlugin() {
+    }
+
+    public SimpleLifePlugin(String beanName, String[] refs, FuncLink funcLink, FuncCallbackPlugin funcCallbackPlugin) {
+        super(beanName, refs, funcLink, funcCallbackPlugin);
     }
     
 }
 ```
+
+> AbstractFuncCallbackPlugin
+
+```java
+public class SimpleCallbackPlugin extends AbstractFuncCallbackPlugin {
+
+    public SimpleCallbackPlugin() {
+    }
+
+    public SimpleCallbackPlugin(String beanName, String[] refs, FuncLink funcLink, FuncProperties funcProperties, FuncLoggerPlugin funcLoggerPlugin) {
+        super(beanName, refs, funcLink, funcProperties, funcLoggerPlugin);
+    }
+    
+}
+
+```
+
+> AbstractFuncLoggerPlugin
+
+```java
+public class SimpleLoggerPlugin extends AbstractFuncLoggerPlugin {
+
+    public SimpleLoggerPlugin() {
+    }
+
+    public SimpleLoggerPlugin(String beanName, String[] refs, FuncLink funcLink, FuncProperties funcProperties) {
+        super(beanName, refs, funcLink, funcProperties);
+    }
+    
+}
+```
+
+#### FuncLink 使用
+
+```java
+@Configuration
+@EnableFuncLambda("com.simple.web.lambda")
+public class FuncLinkConfig {
+
+    @Autowired
+    public FuncLinkFactory funcLinkFactory;
+
+    @Bean("simple")
+    public FuncLink funcLink() {
+        return funcLinkFactory.build()
+                // httpLink
+                .setObject("httpLink:FuncLifePlugin", SimpleLifePlugin.class)
+                .setObject("httpLink:FuncCallbackPlugin", SimpleCallbackPlugin.class)
+                .setObject("httpLink:FuncLoggerPlugin", SimpleLoggerPlugin.class)
+    }
+
+}
+```
+
+##  API更改
+
+###  注解更改
+
+`@FuncConfiguration` 改为 `@FuncBean`
+
+`@EnableLog` 改为 `@FuncLogger`
+
+`CallbackClass` 改为 `@FuncCallback`
+
