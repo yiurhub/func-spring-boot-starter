@@ -1,3 +1,0 @@
-# Auto Config
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.func.spring.boot.FuncAutoConfiguration
