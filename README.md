@@ -65,7 +65,7 @@ FuncLink推荐Lambda操作
 详细内容请看项目: 
 
 ```http
-x 1https://gitee.com/yiur/func-spring-boot-starter/func-web-simple
+https://gitee.com/yiur/func-spring-boot-starter/func-web-simple
 ```
 
 ```java
