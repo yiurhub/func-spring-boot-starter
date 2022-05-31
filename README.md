@@ -16,7 +16,13 @@ https://gitee.com/yiur/func-spring-boot-starter
 
 > 推荐版本:
 
-1. **spring-boot-starter `2.6.x`**
+```xml
+<dependency>
+    <groupId>io.github.yiurhub</groupId>
+    <artifactId>func-spring-boot-starter</artifactId>
+    <version>1.2.0</version>
+</dependency>
+```
 
 ##  设计原理
 
@@ -483,5 +489,5 @@ public class FuncLinkConfig {
 
 `@EnableLog` 改为 `@FuncLogger`
 
-`CallbackClass` 改为 `@FuncCallback`
+`@CallbackClass` 改为 `@FuncCallback`
 
