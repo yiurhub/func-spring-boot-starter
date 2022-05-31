@@ -1,16 +1,14 @@
 package org.func.spring.boot.properties;
 
-import lombok.Data;
 import org.func.spring.boot.component.callback.FuncCallback;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import static org.func.spring.boot.utils.FuncString.*;
+import static org.func.spring.boot.utils.StringUtil.*;
 
 /**
  * Anonymous function configuration
  * @author Yiur
  */
-@Data
 @ConfigurationProperties(prefix = "func-link")
 public class FuncProperties {
 
@@ -32,12 +30,12 @@ public class FuncProperties {
     private Class<? extends FuncCallback> callBack = FuncCallback.class;
 
     public FuncProperties() {
+        logger = new Logger();
     }
 
     /**
      * Anonymous function log configuration
      */
-    @Data
     public static class Logger {
 
         /**
@@ -47,25 +45,30 @@ public class FuncProperties {
         /**
          * log output path
          */
-        private String path = formatTranslate("?/log", System.getProperty("user.dir"));
+        private String path;
         /**
          * global log prefix
          */
-        private String fileName = "func-link";
+        private String fileName;
         /**
          * global log suffix
          */
-        private String fileSuffix = "log";
+        private String fileSuffix;
         /**
          * date formatting
          */
-        private String dateFormat = "yyyy-MM-dd HH:mm:ss:SSS";
+        private String dateFormat;
         /**
          * output log information
          */
-        private String message = "[${invokeResult}] [${dateTime}] call method --> ${methodName}(${parameterSource})\r\n";
+        private String message;
 
         public Logger() {
+            this.path = formatTranslate("?/log", System.getProperty("user.dir"));
+            this.fileName = "func-link";
+            this.fileSuffix = "log";
+            this.dateFormat = "yyyy-MM-dd HH:mm:ss:SSS";
+            this.message = "[${invokeResult}] [${dateTime}] call method --> ${methodName}(${parameterSource})\r\n";
         }
 
         /**
@@ -94,6 +97,86 @@ public class FuncProperties {
             }
         }
 
+        public boolean isEnableLog() {
+            return enableLog;
+        }
+
+        public void setEnableLog(boolean enableLog) {
+            this.enableLog = enableLog;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
+            this.path = path;
+        }
+
+        public String getFileName() {
+            return fileName;
+        }
+
+        public void setFileName(String fileName) {
+            this.fileName = fileName;
+        }
+
+        public String getFileSuffix() {
+            return fileSuffix;
+        }
+
+        public void setFileSuffix(String fileSuffix) {
+            this.fileSuffix = fileSuffix;
+        }
+
+        public String getDateFormat() {
+            return dateFormat;
+        }
+
+        public void setDateFormat(String dateFormat) {
+            this.dateFormat = dateFormat;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
+
+    public boolean isLambda() {
+        return lambda;
+    }
+
+    public void setLambda(boolean lambda) {
+        this.lambda = lambda;
+    }
+
+    public boolean isSingleton() {
+        return isSingleton;
+    }
+
+    public void setSingleton(boolean singleton) {
+        isSingleton = singleton;
+    }
+
+    public Class<? extends FuncCallback> getCallBack() {
+        return callBack;
+    }
+
+    public void setCallBack(Class<? extends FuncCallback> callBack) {
+        this.callBack = callBack;
     }
 
 }

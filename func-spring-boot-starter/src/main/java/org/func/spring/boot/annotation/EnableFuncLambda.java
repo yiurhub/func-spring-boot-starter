@@ -1,7 +1,7 @@
 package org.func.spring.boot.annotation;
 
 
-import org.func.spring.boot.proxy.FuncBeanPostProcessor;
+import org.func.spring.boot.proxy.FuncLinkRegistryProcessor;
 import org.func.spring.boot.proxy.init.FuncInitBeanRegistrar;
 import org.springframework.context.annotation.Import;
 
@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({ FuncInitBeanRegistrar.class, FuncBeanPostProcessor.class })
+@Import({ FuncInitBeanRegistrar.class, FuncLinkRegistryProcessor.class })
 public @interface EnableFuncLambda {
 
     /**

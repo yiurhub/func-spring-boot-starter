@@ -1,23 +1,22 @@
 package org.func.spring.boot.proxy.handel;
 
+import org.func.spring.boot.annotation.FuncAlias;
 import org.func.spring.boot.annotation.FuncLambda;
-import org.func.spring.boot.container.FuncMethod;
-import org.func.spring.boot.type.FuncLambdaType;
-import org.func.spring.boot.utils.FuncString;
-import org.func.spring.boot.proxy.FuncLinkProxyFactory;
-import org.springframework.beans.MutablePropertyValues;
+import org.func.spring.boot.annotation.FuncRefs;
+import org.func.spring.boot.proxy.FuncLinkFactoryBean;
+import org.func.spring.boot.utils.ClassScanner;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.type.MethodMetadata;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
-import static org.func.spring.boot.type.FuncStringConstantPool.EMPTY;
-import static org.func.spring.boot.utils.FuncString.lowercaseFirstLetter;
+import static org.func.spring.boot.pool.FuncStringConstantPool.EMPTY;
+import static org.func.spring.boot.utils.StringUtil.lowercaseFirstLetter;
 
 /**
  * @author Yiur
@@ -26,9 +25,9 @@ public final class FuncLinkBeanHandler {
 
     private final static String CONTEXT = "context";
     private final static String BEAN_NAME = "beanName";
+    private final static String ALIAS = "alias";
     private final static String REFS = "refs";
     private final static String CLASS_OBJECT = "classObject";
-    private final static String FUNC_METHODS = "funcMethods";
 
     private final ApplicationContext context;
 
@@ -39,115 +38,85 @@ public final class FuncLinkBeanHandler {
         this.registry = registry;
     }
 
-    /**
-     * Get bean based on annotation
-     * @param methodMetadata metadata
-     */
-    public void compile(MethodMetadata methodMetadata) {
-        Map<String, Object> attributes = new HashMap<>(Objects.requireNonNull(methodMetadata.getAnnotationAttributes(FuncLambda.class.getName())));
-
-        Class<?> interfaceType = (Class<?>) attributes.get(FuncLambdaType.CLASS_FILE.value);
-        Class<?> classObject = forName(methodMetadata.getDeclaringClassName());
-        String beanName = get(FuncLambdaType.BEAN.value, attributes);
-        String[] refs = get(FuncLambdaType.REFS.value, attributes);
-        if (beanName.equals(EMPTY)) {
-            for (Class<?> anInterface : classObject.getInterfaces()) {
-                if (anInterface.getName().equals(interfaceType.getName())) {
-                    beanName = lowercaseFirstLetter(classObject.getSimpleName());
-                }
-            }
-            if (beanName.equals(EMPTY)) {
-                beanName = lowercaseFirstLetter(interfaceType.getSimpleName());
-            }
-        }
-
+    public void compile(Method method) {
+        FuncLambda funcLambda = ClassScanner.getAnnotation(FuncLambda.class, method);
+        FuncAlias funcAlias = ClassScanner.getAnnotation(FuncAlias.class, method);
+        FuncRefs funcRefs = ClassScanner.getAnnotation(FuncRefs.class, method);
+        Class<?> interfaceType = loadClass(((Class<?>) compare(funcLambda.value(), funcLambda.classFile())).getName());
+        Class<?> classObject = method.getDeclaringClass();
+        String beanName = checkBeanName(funcLambda.bean(), interfaceType, classObject);
+        String alias = funcAlias != null ? funcAlias.value() : funcLambda.alias();
+        String[] refs = funcRefs != null ? funcRefs.value() : funcLambda.refs();
         try {
-            String bean = registry.getBeanDefinition(beanName).getBeanClassName();
-            if (bean != null && bean.equals(FuncLinkProxyFactory.class.getName())) {
-                List<FuncMethod> funcMethods = get(FUNC_METHODS, registry.getBeanDefinition(beanName));
-                if (funcMethods != null) {
-                    funcMethods.add(new FuncMethod(methodMetadata, funcMethods));
-                }
+            BeanDefinition bean = registry.getBeanDefinition(beanName);
+            if (Objects.equals(bean.getBeanClassName(), FuncLinkFactoryBean.class.getName())) {
                 return;
             }
-            List<FuncMethod> funcMethods = new ArrayList<>();
-            funcMethods.add(new FuncMethod(methodMetadata, funcMethods));
-            beanDefinition(interfaceType, classObject.getName(), beanName, refs, funcMethods);
+            beanDefinition(interfaceType, classObject.getName(), beanName, alias, refs);
         } catch (NoSuchBeanDefinitionException e) {
-            List<FuncMethod> funcMethods = new ArrayList<>();
-            funcMethods.add(new FuncMethod(methodMetadata, funcMethods));
-            beanDefinition(interfaceType, classObject.getName(), beanName, refs, funcMethods);
+            beanDefinition(interfaceType, classObject.getName(), beanName, alias, refs);
         }
     }
 
-    /**
-     * bean initialization definition
-     * @param interfaceType proxy interface
-     * @param classObject class object
-     * @param beanName spring bean name
-     * @param refs func link bind spring boot bean
-     * @param funcMethods funcLink proxy method
-     */
-    public void beanDefinition(Class<?> interfaceType, String classObject, String beanName, String[] refs, List<FuncMethod> funcMethods) {
+    private Class<?> loadClass(String className) {
+        Class<?> loadClass = null;
+        try {
+            loadClass = Objects.requireNonNull(((DefaultListableBeanFactory) registry).getBeanClassLoader()).loadClass(className);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return loadClass;
+    }
+
+    private String checkBeanName(String beanName, Class<?> interfaceType, Class<?> classObject) {
+        String checkBeanName = beanName;
+        if (checkBeanName.equals(EMPTY)) {
+            for (Class<?> anInterface : classObject.getInterfaces()) {
+                if (anInterface.getName().equals(interfaceType.getName())) {
+                    checkBeanName = lowercaseFirstLetter(classObject.getSimpleName());
+                }
+            }
+            if (checkBeanName.equals(EMPTY)) {
+                checkBeanName = lowercaseFirstLetter(interfaceType.getSimpleName());
+            }
+        }
+        return checkBeanName;
+    }
+
+    private static Object compare(Object... args) {
+        for (Object arg : args) {
+            if (arg != Object.class) {
+                return arg;
+            }
+        }
+        return null;
+    }
+
+    public void beanDefinition(Class<?> interfaceType, String classObject, String beanName, String alias, String[] refs) {
         ConfigurableListableBeanFactory beanFactory = ((ConfigurableApplicationContext) context).getBeanFactory();
-        GenericBeanDefinition beanDefinition = null;
+        GenericBeanDefinition beanDefinition;
         try {
             beanDefinition = (GenericBeanDefinition) beanFactory.getBeanDefinition(beanName);
-            funcBeanDefinitionInit(beanDefinition, interfaceType, classObject, beanName, refs, funcMethods, AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
+            funcBeanDefinitionInit(beanDefinition, interfaceType, classObject, beanName, alias, refs, AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
         } catch (NoSuchBeanDefinitionException e) {
             BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(interfaceType);
             beanDefinition = (GenericBeanDefinition) builder.getRawBeanDefinition();
-            funcBeanDefinitionInit(beanDefinition, interfaceType, classObject, beanName, refs, funcMethods, AbstractBeanDefinition.AUTOWIRE_BY_NAME);
+            funcBeanDefinitionInit(beanDefinition, interfaceType, classObject, beanName, alias, refs, AbstractBeanDefinition.AUTOWIRE_BY_NAME);
             registry.registerBeanDefinition(beanName, beanDefinition);
         }
     }
 
-    /**
-     * bean initialization definition
-     * @param beanDefinition bean definition
-     * @param interfaceType proxy interface
-     * @param classObject class object
-     * @param beanName spring bean name
-     * @param refs func link bind spring boot bean
-     * @param funcMethods funcLink proxy method
-     * @param autowireMode set autowire mode
-     */
-    private void funcBeanDefinitionInit(GenericBeanDefinition beanDefinition, Class<?> interfaceType, String classObject, String beanName, String[] refs, List<FuncMethod> funcMethods, int autowireMode) {
+    private void funcBeanDefinitionInit(GenericBeanDefinition beanDefinition, Class<?> interfaceType, String classObject, String beanName, String alias, String[] refs, int autowireMode) {
         beanDefinition.getConstructorArgumentValues().addGenericArgumentValue(interfaceType);
-        MutablePropertyValues propertyValues = getPropertyValues(beanDefinition);
-        propertyValues
+        beanDefinition.getPropertyValues()
                 .add(BEAN_NAME, beanName)
+                .add(ALIAS, alias)
                 .add(CONTEXT, context)
                 .add(REFS, refs)
-                .add(CLASS_OBJECT, classObject)
-                .add(FUNC_METHODS, funcMethods);
+                .add(CLASS_OBJECT, classObject);
         beanDefinition.setLazyInit(true);
-        beanDefinition.setBeanClass(FuncLinkProxyFactory.class);
+        beanDefinition.setBeanClass(FuncLinkFactoryBean.class);
         beanDefinition.setAutowireMode(autowireMode);
-    }
-
-    private MutablePropertyValues getPropertyValues(BeanDefinition beanDefinition) {
-        return beanDefinition.getPropertyValues();
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T get(String key, BeanDefinition beanDefinition) {
-        return (T) getPropertyValues(beanDefinition).get(key);
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T get(String key, Map<String, Object> attributes) {
-        return (T) attributes.get(key);
-    }
-
-    private Class<?> forName(String className) {
-        Class<?> aClass = null;
-        try {
-            aClass = Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return aClass;
     }
 
 }

@@ -16,6 +16,6 @@ public @interface FuncBean {
      * binding anonymous function linked beans
      * @return String
      */
-    String link() default "";
+    String value() default "";
 
 }

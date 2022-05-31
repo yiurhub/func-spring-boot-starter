@@ -1,5 +1,7 @@
 package org.func.spring.boot.annotation;
 
+import org.springframework.core.annotation.AliasFor;
+
 import java.lang.annotation.*;
 
 /**
@@ -8,8 +10,21 @@ import java.lang.annotation.*;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
+@Target({ ElementType.TYPE, ElementType.METHOD })
 public @interface FuncLogger {
+
+    /**
+     * log file name
+     * @return String
+     */
+    @AliasFor("name")
+    String value() default "";
+
+    /**
+     * enable func logger
+     * @return boolean
+     */
+    boolean enable() default true;
 
     /**
      * path to log output
@@ -21,6 +36,7 @@ public @interface FuncLogger {
      * log file name
      * @return String
      */
+    @AliasFor("value")
     String name() default "";
 
     /**

@@ -1,10 +1,12 @@
 package org.func.spring.boot.component.callback;
 
+import org.func.spring.boot.component.FuncLinkObject;
+
 /**
  * The callback function after the anonymous function is executed
  * @author Yiur
  */
-public interface FuncCallback<T, R> {
+public interface FuncCallback<T, R> extends FuncLinkObject {
 
     /**
      * An anonymous function executes a successful callback function

@@ -1,6 +1,7 @@
 package org.func.spring.boot;
 
-import org.func.spring.boot.factory.FuncLinkFactory;
+import org.func.spring.boot.builder.FuncLinkBuilder;
+import org.func.spring.boot.builder.SimpleFuncLinkBuilder;
 import org.func.spring.boot.properties.FuncProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -17,14 +18,14 @@ public class FuncAutoConfiguration {
     /**
      * FuncFactory
      */
-    private final FuncLinkFactory funcLinkFactory;
+    private final FuncLinkBuilder funcLinkFactory;
 
     public FuncAutoConfiguration(FuncProperties funcProperties) {
-        this.funcLinkFactory = new FuncLinkFactory(funcProperties);
+        this.funcLinkFactory = new SimpleFuncLinkBuilder(funcProperties);
     }
 
     @Bean
-    public FuncLinkFactory funcFactory() {
+    public FuncLinkBuilder funcFactory() {
         return funcLinkFactory;
     }
 

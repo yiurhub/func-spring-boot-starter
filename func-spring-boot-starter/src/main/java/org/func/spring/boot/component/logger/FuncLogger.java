@@ -1,20 +1,22 @@
 package org.func.spring.boot.component.logger;
 
-import java.util.Map;
+import org.func.spring.boot.component.FuncLinkObject;
+import org.func.spring.boot.exception.FuncLoggerException;
+
 import java.util.Set;
 
 /**
  * Anonymous function configuration log
  * @author Yiur
  */
-public interface FuncLogger {
+public interface FuncLogger extends FuncLinkObject {
 
     /**
      * output log
      * @param keys Anonymous function information collection
-     * @param parameter Parameters before method execution
      * @return String
+     * @exception FuncLoggerException t
      */
-    String logger(Set<String> keys, Map<String, Object> parameter);
+    String logger(Set<String> keys) throws FuncLoggerException;
 
 }
