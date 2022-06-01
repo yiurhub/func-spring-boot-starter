@@ -20,7 +20,7 @@ https://gitee.com/yiur/func-spring-boot-starter
 <dependency>
     <groupId>io.github.yiurhub</groupId>
     <artifactId>func-spring-boot-starter</artifactId>
-    <version>1.2.0</version>
+    <version>1.1.38</version>
 </dependency>
 ```
 
